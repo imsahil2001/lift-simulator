@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div class="simulation-box" style="display: fixed">
+      <h2>Lift Simulation Project</h2>
+      <form id="liftForm">
+        No of Floors <input type="nunber" id="floorsdata" value="3" />
+
+        No Of lifts <input type="number" id="liftsdata" value="3" />
+
+        <button class="submitBtn" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="mainFloorBody"></div>
+
+    <table>
+      <tbody>
+        <tr style="border: 1px solid red" class="floor-1">
+          <td style="padding: 30px">
+            <span style="float: left">Floor 1</span>
+            <!-- <button style="float: right" class="up-btn">up</button>
+            <br />
+            <button style="float: right" class="down-btn">down</button>
+            <hr /> -->
+          </td>
+          <td style="padding: 30px">
+            <button class="up-btn" onclick="liftstart(event)">up</button>
+            <br />
+            <button class="down-btn">down</button>
+            <hr />
+          </td>
+          <td style="padding: 30px">
+            <div style="background-color: red; padding: 5px"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script src="main.js"></script>
+  </body>
+</html>

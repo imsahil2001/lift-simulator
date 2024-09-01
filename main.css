@@ -1,0 +1,44 @@
+*{
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+}
+
+.floor{
+   border-bottom: 1px solid red;
+   height: 80px;
+   display: flex;
+}
+
+.lift{
+   background: red;
+   height: 100%;
+   width: 4%;
+   /* transform: translateY(10px); */
+   position: relative;
+}
+
+.groundFloor{
+   display: flex;
+}
+
+.liftContainer{
+   display: flex;
+   width: 90%;
+   /* flex-direction: row;
+   justify-content: space-around;
+   align-items: flex-end; */
+   gap: 50px;
+}
+
+
+.actualfloor{
+   display: inline-block;
+   height: 100%;
+   width: 80px;
+}
+
+.buttonContainer{
+   display: inline-block;
+}
+
