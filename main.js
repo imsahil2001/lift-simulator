@@ -9,6 +9,26 @@ let liftPresenceAr = [];
 let interval;
 let liftQueueMap = new Map();
 let liftObjArr = [];
+let inputs = document.getElementsByTagName("input");
+let resetBtn = document.querySelector(".redoBtn");
+
+
+
+
+/** Preventing user to enter any character value */
+Array.from(inputs).forEach(input => {
+  input.addEventListener("keypress", (e) => {
+    let regex = /^[0-9]*$/;
+    let char = String.fromCharCode(e.keyCode);
+    if (!regex.test(char)) {
+      e.preventDefault();
+      return;
+    }
+
+  })
+  console.log(`${input}`);
+});
+
 
 btn.addEventListener("click", (event) => {
   mainFloorBody.innerHTML = "";
@@ -63,7 +83,8 @@ function creatingFloors(floor, lifts) {
     btnUp.classList.add("floor-btn");
     btnDown.classList.add("floor-btn");;
 
-    if (floor !== floorElem - 1)
+
+    if (floor !== floorElem.value - 1)
       buttonContainer.appendChild(btnUp);
 
     if (floor !== 0)
@@ -103,8 +124,15 @@ function creatingFloors(floor, lifts) {
     rightDoor.classList.add("right-door");
     rightDoor.setAttribute("right-door-id", i);
 
+    //adding lift counter
+    let counter = document.createElement("span");
+    counter.classList.add("counter");
+    counter.setAttribute("id", `counter-${i}`);
+    counter.innerText = i;
+
     liftbox.appendChild(leftDoor);
     liftbox.appendChild(rightDoor);
+    liftbox.appendChild(counter);
     liftContainer.appendChild(liftbox);
   }
 
@@ -816,3 +844,18 @@ function doorAnimation(lift) {
 
   return [leftDoor, rightDoor];
 }
+
+
+function intializeState() {
+  floor = 0;
+  lifts = 0;
+  liftPresenceAr = [];
+  interval;
+  liftQueueMap = new Map();
+  liftObjArr = [];
+}
+
+resetBtn.addEventListener("click", () => {
+  intializeState();
+  mainFloorBody.innerHTML = "";
+})

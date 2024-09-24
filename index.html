@@ -8,29 +8,68 @@
   </head>
   <body>
     <div class="simulation-box" style="display: fixed">
-      <h2 class="lift-simulation-heading">Lift Simulation Project</h2>
+      <svg
+        id="lift-hi"
+        xmlns="http://www.w3.org/2000/svg"
+        width="100"
+        height="100"
+        viewBox="0 0 100 100"
+        style="display: none"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="black"
+          stroke-width="2"
+          fill="lightblue"
+        />
+        <text
+          x="50%"
+          y="50%"
+          text-anchor="middle"
+          dy=".3em"
+          font-size="24"
+          fill="black"
+        >
+          Hi
+        </text>
+      </svg>
+
+      <h2 class="lift-simulation-heading">Lift Simulation</h2>
       <form id="liftForm">
         <input
           type="text"
           id="floorsdata"
           class="input-field"
-          value="5"
           placeholder="floors"
           pattern="^[0-9]*$"
           max="100"
         />
 
         <input
-          type="number"
+          type="text"
           id="liftsdata"
           class="input-field"
-          value="3"
           placeholder="lifts"
           pattern="^[0-9]*$"
           max="100"
         />
 
-        <button class="submitBtn" type="submit">Submit</button>
+        <button class="submitBtn" type="submit">Simulate</button>
+        <button class="redoBtn" type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#000000"
+          >
+            <path
+              d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z"
+            />
+          </svg>
+        </button>
       </form>
     </div>
 
@@ -77,15 +116,15 @@
       </div>
     </div> -->
 
-    <table>
+    <!-- <table>
       <tbody>
         <tr style="border: 1px solid red" class="floor-1">
           <td style="padding: 30px">
             <span style="float: left">Floor 1</span>
-            <!-- <button style="float: right" class="up-btn">up</button>
+            <button style="float: right" class="up-btn">up</button>
             <br />
             <button style="float: right" class="down-btn">down</button>
-            <hr /> -->
+            <hr /> 
           </td>
           <td style="padding: 30px">
             <button class="up-btn" onclick="liftstart(event)">up</button>
@@ -98,7 +137,7 @@
           </td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
     <script src="main.js"></script>
   </body>

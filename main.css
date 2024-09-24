@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap');
 
 
 *{
@@ -10,13 +11,44 @@
 
 body{
    overflow-x: auto;
-   background-color: rgb(120, 120, 120);
+   /* background-color: rgb(120, 120, 120); */
+}
+
+.simulation-box{
+   /* border-bottom: 3px solid black; */
+   padding-bottom: 25px;
+   position: sticky;
+   display: block;
+   top: 0;
+   background: transparent;
+   z-index: 11;
+   background-image: linear-gradient(to bottom, rgb(56, 56, 56), rgba(240, 6, 6, 0)); /* Gradient from solid color to transparent */
+   backdrop-filter: blur(2px); /* Applies blur to the background */
+
+}
+
+#liftForm{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   gap: 10px;
+}
+
+.lift-simulation-heading{
+   font-family: "Honk", system-ui;
+   font-optical-sizing: auto;
+   font-weight: 400;
+   font-style: normal;
+   font-variation-settings:
+     "MORF" 15,
+     "SHLN" 50;
+     font-size: 40px;
 }
 
 
-
 .floor{
-   border-bottom: 1px solid red;
+   border-bottom: 1px solid gray;
    height: 80px;
    display: grid;
    position: relative;
@@ -52,7 +84,9 @@ body{
 
 .lift{
    display: inline-block;
-   /* background: red; */
+   /* background: rgb(85, 85, 85); */
+   background: rgb(2,0,36);
+background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgba(224,229,230,1) 100%);
    height: 100%;
    width: 50px;
    /* transform: translateY(10px); */
@@ -66,7 +100,16 @@ body{
 .actualfloor{
    display: inline-block;
    height: 100%;
-   width: 100px ;
+   width: 100px;
+   text-align: center;
+   padding-top: 30.5%;
+   font-family: "Cabin", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+    font-size: 1.1em;
 }
 
 .buttonContainer{
@@ -79,28 +122,25 @@ body{
    text-align: center;
 }
 
-.lift-simulation-heading{
-   font-family: "Honk", system-ui;
-   font-optical-sizing: auto;
-   font-weight: 400;
-   font-style: normal;
-   font-variation-settings:
-     "MORF" 15,
-     "SHLN" 50;
-     font-size: 40px;
-}
+
 
 .submitBtn{
    position: relative;
-   background-color: red;
-    padding: 10px 20px 10px 20px;
-    border: 0px solid transparent;
-    border-radius: 24px;
+   background-color: rgb(212, 212, 212);
+    padding: 5px 10px 5px 10px;
+    border: 2px solid black;
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.45) 1.95px 1.95px 2.6px;
     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1); 
     transform: translateX(0px) translateY(0px);
     overflow: hidden;
+    font-family: "Cabin", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+    font-size: 1em;
 }
 
 .submitBtn:active{
@@ -123,19 +163,34 @@ body{
    transition: transform 0.3s ease , visibility 0.3s ease; /* Transition effect for the transform property */
 }
 
-.submitBtn:hover::after {
-   transform: translateY(0); /* Move into view on hover */
-   visibility: visible;
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.redoBtn{
+    /* height: 20px;
+   width: 20px; */
+   background: none;
+   outline: none;
+   border: none;
+   cursor: pointer;
+   padding: 10px;
+
 }
 
 .input-field{
-   width: 80px;
-   height: 30px;
+   width: 83px;
+   height: 36px;
    border: 2px solid black;
    padding-left: 3px;
    font-weight: bold;
    text-align: center;
    outline: none;
+   font-size: 23px;
 }
 
 .input-field::placeholder{
@@ -155,7 +210,22 @@ body{
 .floor-btn{
    display: inline-block;
    cursor: pointer;
+   font-family: "Honk", system-ui;
+   font-optical-sizing: auto;
+   font-weight: 400;
+   font-style: normal;
+   font-variation-settings: "MORF" 15, "SHLN" 50;
+   font-size: 20px;
+   border: 1px solid gray;
+   border-radius: 10px;
+   padding: 3px 0px 3px 0px;
 }
+
+.floor-btn:active{
+   transform: scale(.95)
+
+}
+
 
 .buttonContainer{
 
@@ -172,24 +242,24 @@ body{
    display: inline-block;
    margin-left: 0%;
    transition: leftDoorAnimation 1.5s ease-in-out;
-   background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    position: absolute;
-    top: 0;
-    left: 0;
+   background: rgb(83,83,83);
+   background: linear-gradient(90deg, rgba(83,83,83,1) 2%, rgba(0,0,0,1) 100%);
+   border-right: 1px solid gray;
+   z-index: 50;
+   
 }
 
 .right-door{ 
-   background-color: yellow;
    height: 100%;
    width: 50%;
    position: absolute;
    display: inline-block;
    margin-left: 50%;
    transition: all 1.5s ease-in-out;
+   background: rgb(83,83,83);
+   background: linear-gradient(90deg, rgba(0,0,0,1) 2%, rgba(83,83,83,1) 100%);
+   border-left: 1px solid gray;
+   z-index: 50;
 }
 
 .left-door-animation{
@@ -198,6 +268,22 @@ body{
 
 .right-door-animation{
    animation: rightDoorAnimation 5s ease-in-out;
+}
+
+.counter{
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+    z-index: 25;
+    font-family: "Cabin", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+    font-size: 1.3em;
 }
 
 @keyframes leftDoorAnimation {
