@@ -36,7 +36,8 @@ btn.addEventListener("click", (event) => {
   // console.log(`btn pressed`);
   // console.log(typeof floorElem.value);
 
-  if (floorElem.value == "" && lift.value == "" || floorElem.value == "") {
+
+  if ((floorElem.value === "" && lift.value === "") || floorElem.value === "" || lift.value === "") {
     alert("Floors and lifts are required for Simulation to run");
     return;
   }
@@ -350,6 +351,7 @@ function moveLifts(floorNo) {
     */
     setTimeout(() => {
       if (liftObj.getState() == "moving") {
+        document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
         liftObj.setState("doorAnimating");
         // freelift.setAttribute("state", "doorAnimating");
         // freelift.setAttribute("currentFloor", floorNo);
@@ -395,6 +397,14 @@ function removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr) {
   for (let i = 0; i < liftObjArr.length; i++) {
     liftPresenceAr[liftObjArr[i].getCurrentFloor()] = liftObjArr[i].getId();
   }
+
+  //nearest lift 1st floor pr assign nhi hoti or line mein nearest ke next wale lift ko 1floor assign hota h 
+  //jo ki technically dekha jaye sahi nhi hai
+  for (let i = 0; i < liftObjArr.length; i++) {
+    if (liftObjArr[i].getCurrentFloor() == 1 && liftObjArr[i].getState() == "free")
+      liftPresenceAr[1] = Math.min(liftPresenceAr[1], liftObjArr[i].getId());
+  }
+
 }
 
 // attribute based upddate lift position
@@ -546,6 +556,7 @@ function updateLiftPos(currentLiftQueue, floorNo, liftPresenceAr, liftObj, liftO
   */
   setTimeout(() => {
     if (liftObj.getState() == "moving") {
+      document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
       liftObj.setState("doorAnimating");
       // freelift.setAttribute("state", "doorAnimating");
       // freelift.setAttribute("currentFloor", floorNo);
