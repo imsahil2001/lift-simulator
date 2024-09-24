@@ -1,44 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+
+
 *{
    padding: 0;
    margin: 0;
    box-sizing: border-box;
+   
 }
+
+body{
+   overflow-x: auto;
+   background-color: black;
+}
+
+
 
 .floor{
    border-bottom: 1px solid red;
    height: 80px;
+   display: grid;
+   position: relative;
+   grid-template-columns: auto auto auto;
+   justify-content: start;
+   z-index: 10;
+   /* display: flex; */
+   /* align-items: center; */
+   /* overflow-x: auto; */
+}
+
+
+
+/* .groundFloor{
    display: flex;
+} */
+
+.liftContainer{
+   display: inline-flex;
+   /* display: inline-block; */
+       /* flex-direction:column; */
+   /*justify-content: space-around;
+   align-items: flex-end; */
+   gap: 25px;
+   /* margin-left: 71px; */
+   height: 100%;
+   position: relative;
+   width: 100%;
+   /* overflow-x: auto; Enables horizontal scrolling */
+   white-space: nowrap; /* Prevents wrapping of child elements */
+   z-index: 999;
 }
 
 .lift{
-   background: red;
+   display: inline-block;
+   /* background: red; */
    height: 100%;
-   width: 4%;
+   width: 50px;
    /* transform: translateY(10px); */
    position: relative;
-}
-
-.groundFloor{
-   display: flex;
-}
-
-.liftContainer{
-   display: flex;
-   width: 90%;
-   /* flex-direction: row;
-   justify-content: space-around;
-   align-items: flex-end; */
-   gap: 50px;
+   overflow: hidden;
+   z-index: 9999;
+   flex-shrink: 0;
 }
 
 
 .actualfloor{
    display: inline-block;
    height: 100%;
-   width: 80px;
+   width: 100px !important;
 }
 
 .buttonContainer{
    display: inline-block;
+   width: 100px;
+   height: 100%;
 }
 
+.simulation-box{
+   text-align: center;
+}
+
+.lift-simulation-heading{
+   font-family: "Honk", system-ui;
+   font-optical-sizing: auto;
+   font-weight: 400;
+   font-style: normal;
+   font-variation-settings:
+     "MORF" 15,
+     "SHLN" 50;
+     font-size: 40px;
+}
+
+.submitBtn{
+   position: relative;
+   background-color: red;
+    padding: 10px 20px 10px 20px;
+    border: 0px solid transparent;
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.45) 1.95px 1.95px 2.6px;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1); 
+    transform: translateX(0px) translateY(0px);
+    overflow: hidden;
+}
+
+.submitBtn:active{
+   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+   transform: translateX(2px) translateY(2px);
+}
+
+.submitBtn::after {
+   content: ''; /* Required for the pseudo-element to display */
+   position: absolute; /* Position it absolutely within .submitBtn */
+   top: 0;
+   left: 0;
+   right: 0;
+   border-radius: 5%;
+   visibility: hidden;
+   border-radius: 24px;
+   bottom: 0;
+   background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent overlay */
+   transform: translateY(100%); /* Start off-screen below the button */
+   transition: transform 0.3s ease , visibility 0.3s ease; /* Transition effect for the transform property */
+}
+
+.submitBtn:hover::after {
+   transform: translateY(0); /* Move into view on hover */
+   visibility: visible;
+}
+
+.input-field{
+   width: 80px;
+   height: 30px;
+   border: 2px solid black;
+   padding-left: 3px;
+   font-weight: bold;
+   text-align: center;
+   outline: none;
+}
+
+.input-field::placeholder{
+   padding-left: 3px;
+}
+
+/* .left-door{ 
+   background-color: black;
+   height: 100%;
+   width: 50%;
+   position: absolute;
+   display: inline-block;
+   margin-left: 0%;
+   transition: leftDoorAnimation 1.5s ease-in-out;
+} */
+
+.floor-btn{
+   display: inline-block;
+   cursor: pointer;
+}
+
+.buttonContainer{
+
+   display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.left-door{ 
+   background-color: black;
+   height: 100%;
+   width: 50%;
+   position: absolute;
+   display: inline-block;
+   margin-left: 0%;
+   transition: leftDoorAnimation 1.5s ease-in-out;
+   background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.right-door{ 
+   background-color: yellow;
+   height: 100%;
+   width: 50%;
+   position: absolute;
+   display: inline-block;
+   margin-left: 50%;
+   transition: all 1.5s ease-in-out;
+}
+
+.left-door-animation{
+   animation: leftDoorAnimation 5s ease-in-out;
+}
+
+.right-door-animation{
+   animation: rightDoorAnimation 5s ease-in-out;
+}
+
+@keyframes leftDoorAnimation {
+   0%{
+      margin-left: 0%;
+   }
+   50%{
+      margin-left: -50%;
+   }
+   100%{
+      margin-left: 0%;
+   }
+}
+
+@keyframes rightDoorAnimation {
+   0%{
+      margin-left: 50%;
+   }
+   50%{
+      margin-left: 100%;
+   }
+   100%{
+      margin-left: 50%;
+   }
+}

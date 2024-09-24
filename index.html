@@ -8,17 +8,74 @@
   </head>
   <body>
     <div class="simulation-box" style="display: fixed">
-      <h2>Lift Simulation Project</h2>
+      <h2 class="lift-simulation-heading">Lift Simulation Project</h2>
       <form id="liftForm">
-        No of Floors <input type="nunber" id="floorsdata" value="3" />
+        <input
+          type="text"
+          id="floorsdata"
+          class="input-field"
+          value="5"
+          placeholder="floors"
+          pattern="^[0-9]*$"
+          max="100"
+        />
 
-        No Of lifts <input type="number" id="liftsdata" value="3" />
+        <input
+          type="number"
+          id="liftsdata"
+          class="input-field"
+          value="3"
+          placeholder="lifts"
+          pattern="^[0-9]*$"
+          max="100"
+        />
 
         <button class="submitBtn" type="submit">Submit</button>
       </form>
     </div>
 
     <div class="mainFloorBody"></div>
+
+    <!-- <div class="mainFloorBody">
+      <div class="floor groundFloor">
+        <div class="actualfloor">Floor 1</div>
+        <div class="buttonContainer">
+          <button floor="1">UP</button><button floor="1">DOWN</button>
+        </div>
+        <div class="liftContainer">
+          <div
+            class="lift"
+            state="free"
+            currentfloor="1"
+            destinationfloor="0"
+            id="1"
+          >
+            <span class="left-door" left-door-id="1"></span
+            ><span class="right-door" right-door-id="1"></span>
+          </div>
+          <div
+            class="lift"
+            state="free"
+            currentfloor="1"
+            destinationfloor="0"
+            id="2"
+          >
+            <span class="left-door" left-door-id="2"></span
+            ><span class="right-door" right-door-id="2"></span>
+          </div>
+          <div
+            class="lift"
+            state="free"
+            currentfloor="1"
+            destinationfloor="0"
+            id="3"
+          >
+            <span class="left-door" left-door-id="3"></span
+            ><span class="right-door" right-door-id="3"></span>
+          </div>
+        </div>
+      </div>
+    </div> -->
 
     <table>
       <tbody>

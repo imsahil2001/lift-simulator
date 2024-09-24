@@ -443,3 +443,74 @@ function deletingFloors() {
     floordiv.remove();
   }
 }
+
+class Lift {
+  constructor(id) {
+    this.id = id;
+    this.currentFloor = 1;
+    this.direction = null; // 'up' or 'down'
+    this.queue = [];
+    this.isMoving = false;
+  }
+
+  requestFloor(floor) {
+    if (!this.isMoving) {
+      this.moveToFloor(floor);
+    } else {
+      this.queue.push(floor);
+    }
+  }
+
+  moveToFloor(floor) {
+    this.isMoving = true;
+    this.direction = floor > this.currentFloor ? "up" : "down";
+
+    // Simulate the lift moving to the requested floor
+    const moveLift = () => {
+      if (this.currentFloor !== floor) {
+        this.currentFloor += this.direction === "up" ? 1 : -1;
+        document.getElementById("elevator").style.transform = `translateY(${
+          (7 - this.currentFloor) * 50
+        }px)`;
+        setTimeout(moveLift, 1000); // Move every second
+      } else {
+        this.isMoving = false;
+        this.direction = null;
+        this.processQueue();
+      }
+    };
+
+    moveLift();
+  }
+
+  processQueue() {
+    if (this.queue.length > 0) {
+      const nextFloor = this.queue.shift();
+      this.moveToFloor(nextFloor);
+    }
+  }
+}
+
+const lifts = [new Lift(1), new Lift(2)];
+
+document.querySelectorAll(".floor").forEach((floor) => {
+  floor.addEventListener("click", () => {
+    const requestedFloor = parseInt(floor.getAttribute("data-floor"));
+    const availableLift = lifts.find((lift) => !lift.isMoving);
+
+    if (availableLift) {
+      availableLift.requestFloor(requestedFloor);
+    } else {
+      // Find the nearest lift
+      const nearestLift = lifts.re;
+
+      duce((prev, curr) => {
+        return Math.abs(curr.currentFloor - requestedFloor) <
+          Math.abs(prev.currentFloor - requestedFloor)
+          ? curr
+          : prev;
+      });
+      nearestLift.requestFloor(requestedFloor);
+    }
+  });
+});
