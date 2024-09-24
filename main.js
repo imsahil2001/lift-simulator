@@ -140,6 +140,7 @@ function creatingFloors(floor, lifts) {
   // console.log(`${liftObjArr[0].print()} ${liftObjArr[1].print()} ${liftObjArr[2].print()}`);
 
   floorContainer.appendChild(liftContainer);
+  removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
 }
 
 mainFloorBody.addEventListener("click", (event) => {
@@ -246,14 +247,16 @@ mainFloorBody.addEventListener("click", (event) => {
 // objects based moving lifts function 
 function moveLifts(floorNo) {
   if (liftPresenceAr[floorNo] != -1) {
+    console.log(`Lift no --> ${liftPresenceAr[floorNo]} already present`);
 
     let liftObj = liftObjArr[liftPresenceAr[floorNo] - 1];
+    document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
     let freelift = document.querySelector(`#lift-${liftObj.getId()}`);
     let doors = doorAnimation(freelift);
-    liftObj.setDestinationFloor(-1);
+    // liftObj.setDestinationFloor(-1);
     liftObj.setState("doorAnimating");
 
-    removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
+    // removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
     setTimeout(() => {
       doors[0].classList.remove("left-door-animation");
       doors[1].classList.remove("right-door-animation");
@@ -261,7 +264,6 @@ function moveLifts(floorNo) {
       liftObj.setState("free");
     }, 5000);
 
-    console.log(`Lift no --> ${liftPresenceAr[floorNo]} already present`);
     return
   };
 
@@ -351,6 +353,7 @@ function moveLifts(floorNo) {
     */
     setTimeout(() => {
       if (liftObj.getState() == "moving") {
+        removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
         document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
         liftObj.setState("doorAnimating");
         // freelift.setAttribute("state", "doorAnimating");
@@ -365,7 +368,7 @@ function moveLifts(floorNo) {
         let doors = doorAnimation(freelift);
         liftObj.setDestinationFloor(-1);
 
-        removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
+
         setTimeout(() => {
           doors[0].classList.remove("left-door-animation");
           doors[1].classList.remove("right-door-animation");
@@ -556,6 +559,7 @@ function updateLiftPos(currentLiftQueue, floorNo, liftPresenceAr, liftObj, liftO
   */
   setTimeout(() => {
     if (liftObj.getState() == "moving") {
+      removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
       document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
       liftObj.setState("doorAnimating");
       // freelift.setAttribute("state", "doorAnimating");
@@ -570,7 +574,6 @@ function updateLiftPos(currentLiftQueue, floorNo, liftPresenceAr, liftObj, liftO
       let doors = doorAnimation(freelift);
       liftObj.setDestinationFloor(-1);
 
-      removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
       setTimeout(() => {
         doors[0].classList.remove("left-door-animation");
         doors[1].classList.remove("right-door-animation");
