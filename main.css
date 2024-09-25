@@ -17,7 +17,7 @@ body{
 .simulation-box{
    /* border-bottom: 3px solid black; */
    padding-bottom: 25px;
-   position: sticky;
+   /* position: sticky; */
    display: block;
    top: 0;
    background: transparent;
