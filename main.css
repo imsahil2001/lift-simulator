@@ -241,7 +241,7 @@ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgb
    position: absolute;
    display: inline-block;
    margin-left: 0%;
-   transition: leftDoorAnimation 1.5s ease-in-out;
+   /* transition: leftDoorAnimation 1.5s ease-in-out; */
    background: rgb(83,83,83);
    background: linear-gradient(90deg, rgba(83,83,83,1) 2%, rgba(0,0,0,1) 100%);
    border-right: 1px solid gray;
@@ -255,7 +255,7 @@ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgb
    position: absolute;
    display: inline-block;
    margin-left: 50%;
-   transition: all 1.5s ease-in-out;
+   /* transition: all 1.5s ease-in-out; */
    background: rgb(83,83,83);
    background: linear-gradient(90deg, rgba(0,0,0,1) 2%, rgba(83,83,83,1) 100%);
    border-left: 1px solid gray;
@@ -263,11 +263,11 @@ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgb
 }
 
 .left-door-animation{
-   animation: leftDoorAnimation 5s ease-in-out;
+   animation: leftDoorAnimation 2.5s ease-in-out;
 }
 
 .right-door-animation{
-   animation: rightDoorAnimation 5s ease-in-out;
+   animation: rightDoorAnimation 2.5s ease-in-out;
 }
 
 .counter{

@@ -333,7 +333,7 @@ function moveLifts(floorNo, btnDirection) {
   let liftObj = liftObjArr[nearestLiftId - 1];
 
   if (nearestLiftId !== - 1 && liftObjArr[nearestLiftId - 1].getState() == "free") {
-    liftPresenceAr[liftObj.getPreivousFloor()] = -1;
+    liftPresenceAr[liftObj.getCurrentFloor()] = -1;
 
     if (btnDirection.includes("up")) {
       floorArr[floorNo].setUpBtnDisable(true);
@@ -426,13 +426,13 @@ function moveLifts(floorNo, btnDirection) {
     */
     setTimeout(() => {
       if (liftObj.getState() == "moving") {
+        liftCurrentFloor[liftObj.getDestinationFloor()] = liftObj.getId();
         liftObj.setCurrentFloor(floorNo);
 
         liftObj.setState("doorAnimating");
         let doors = doorAnimation(freelift);
 
         liftPresenceAr[floorNo] = parseInt(liftObj.getId());
-        liftCurrentFloor[liftObj.getPreivousFloor()] = -1;
         // removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
 
         document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
@@ -469,11 +469,13 @@ function moveLifts(floorNo, btnDirection) {
           }
 
           liftObj.setBtnDirect("");
+          // removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
 
           if (mainRequestQueue.size() > 0)
             updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr, floorArr);
-          // if (currentLiftQueue.size() > 0)
-          //   updateLiftPos(currentLiftQueue, currentLiftQueue.front(), liftPresenceAr, liftObj, liftObjArr);
+          else if (mainRequestQueue.size() == 0)
+            removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
+
         }, 5000);
 
       }
@@ -510,6 +512,7 @@ function removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr) {
 
 // lift obj based update lift position
 function updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr, floorArr) {
+  liftPresenceAr[liftObj.getCurrentFloor()] = -1;
   let queueData = mainRequestQueue.front();
   let destinationFloor = queueData.item;
   let btnDirection = queueData.btnDirection;
@@ -604,12 +607,12 @@ function updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr, fl
   */
   setTimeout(() => {
     if (liftObj.getState() == "moving") {
+      liftCurrentFloor[liftObj.getDestinationFloor()] = liftObj.getId();
       liftObj.setCurrentFloor(destinationFloor);
       liftObj.setState("doorAnimating");
       let doors = doorAnimation(freelift);
 
       liftPresenceAr[destinationFloor] = parseInt(liftObj.getId());
-      liftCurrentFloor[liftObj.getPreivousFloor()] = -1;
 
       // removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
       document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
@@ -654,6 +657,8 @@ function updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr, fl
 
         if (mainRequestQueue.size() > 0)
           updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr);
+        else if (mainRequestQueue.size() == 0)
+          removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
       }, 5000);
 
     }
