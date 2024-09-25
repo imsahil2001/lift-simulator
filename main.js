@@ -3,8 +3,8 @@ class Queue {
     this.items = [];
   }
 
-  add(item) {
-    this.items.push(item);
+  add(item, btnDirection) {
+    this.items.push({ item, btnDirection });
   }
 
   remove() {
@@ -25,7 +25,7 @@ class Queue {
   printQueue() {
     let str = "";
     for (let i = 0; i < this.items.length; i++)
-      str += this.items[i] + " ";
+      str += this.items[i].item + " " + this.items[i].btnDirection;
     return str;
   }
 }
@@ -150,7 +150,6 @@ let interval;
 let liftQueueMap = new Map();
 let liftObjArr = [];
 let inputs = document.getElementsByTagName("input");
-let resetBtn = document.querySelector(".redoBtn");
 let mainRequestQueue = new Queue();
 let floorArr = [];
 
@@ -170,13 +169,15 @@ Array.from(inputs).forEach(input => {
 
 
 btn.addEventListener("click", (event) => {
+  event.preventDefault();
   if (mainFloorBody.innerHTML !== "") {
-    alert("Please reset before starting a new simulation!");
-    return;
+    alert("Initializing new simualtion");
+    intializeState();
+    // return;
   }
 
   mainFloorBody.innerHTML = "";
-  event.preventDefault();
+
   // console.log(`btn pressed`);
   // console.log(typeof floorElem.value);
 
@@ -394,7 +395,7 @@ function moveLifts(floorNo, btnDirection) {
       );
       test = `translateY(${80 * (floorNo - liftCurrentFloor)}px)`;
     }
-    console.log(`${test}`);
+    // console.log(`${test}`);
 
     freelift.style.transition = `all ${2 * Math.abs(floorNo - liftCurrentFloor)}s`;
     freelift.style.backgroundColor = `blue`;
@@ -432,7 +433,7 @@ function moveLifts(floorNo, btnDirection) {
 
         liftPresenceAr[floorNo] = parseInt(liftObj.getId());
         liftCurrentFloor[liftObj.getPreivousFloor()] = -1;
-        removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
+        // removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
 
         document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
 
@@ -461,14 +462,16 @@ function moveLifts(floorNo, btnDirection) {
 
           if (liftObj.getBtnDirect() === "up") {
             floorArr[floorNo].setUpBtnDisable(false);
-            liftObj.setBtnDirect("up")
+            // liftObj.setBtnDirect("up")
           } else if ((liftObj.getBtnDirect() === "down")) {
             floorArr[floorNo].setDownBtnDisable(false);
-            liftObj.setBtnDirect("down")
+            // liftObj.setBtnDirect("down")
           }
 
+          liftObj.setBtnDirect("");
+
           if (mainRequestQueue.size() > 0)
-            updateLiftPos(mainRequestQueue, mainRequestQueue.front(), liftPresenceAr, liftObj, liftObjArr);
+            updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr, floorArr);
           // if (currentLiftQueue.size() > 0)
           //   updateLiftPos(currentLiftQueue, currentLiftQueue.front(), liftPresenceAr, liftObj, liftObjArr);
         }, 5000);
@@ -506,14 +509,29 @@ function removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr) {
 
 
 // lift obj based update lift position
-function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftObjArr) {
+function updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr, floorArr) {
+  let queueData = mainRequestQueue.front();
+  let destinationFloor = queueData.item;
+  let btnDirection = queueData.btnDirection;
+
   mainRequestQueue.remove();
+
+  console.log(`front item from queue gave --> ${queueData.item} ${queueData.btnDirection}`);
   /**
    * moving lift ka purana position remove krna cuz new position destination wala ban chuka hai
    */
   // Logic to move the Lift to the desired Floor
   // let liftCurrentFloor = allLifts[i].getAttribute("currentFloor");
   let liftCurrentFloor = liftObj.getCurrentFloor();
+
+  if (btnDirection.includes("up")) {
+    floorArr[destinationFloor].setUpBtnDisable(true);
+    liftObj.setBtnDirect("up")
+  } else {
+    floorArr[destinationFloor].setDownBtnDisable(true);
+    liftObj.setBtnDirect("down")
+  }
+  liftObj.setState("moving");
 
   /**
    * moving lift ka purana position remove krna cuz new position destination wala ban chuka hai
@@ -522,10 +540,10 @@ function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftO
 
   // console.log(allLifts[i]);
 
-  let totalDuration = 2 * Math.abs(floorNo - liftCurrentFloor);
+  let totalDuration = 2 * Math.abs(destinationFloor - liftCurrentFloor);
   // console.log(`duration --> ${totalDuration}`);
   let direction = "up";
-  if (floorNo > liftCurrentFloor) {
+  if (destinationFloor > liftCurrentFloor) {
     // currentLiftQueue.items.sort((a, b) => a - b); // agr chota floor milta hai raste mein to lift ko sahi floor par rokne ke liye
     // console.log(`queue data --> ${currentLiftQueue.printQueue()}`)
   }
@@ -537,27 +555,27 @@ function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftO
   // freelift.setAttribute("state", "moving");
   liftObj.setState("moving")
   // freelift.setAttribute("destinationFloor", currentLiftQueue.front());
-  liftObj.setDestinationFloor(floorNo);
+  liftObj.setDestinationFloor(destinationFloor);
 
 
   let test = "";
   if (direction === "up") {
-    freelift.style.transform = `translateY(${(-80 * (floorNo - liftCurrentFloor)) + liftObj.getTranslateY()}px)`;
+    freelift.style.transform = `translateY(${(-80 * (destinationFloor - liftCurrentFloor)) + liftObj.getTranslateY()}px)`;
     liftObj.setTranslateY(
-      (-80 * (floorNo - liftCurrentFloor)) + liftObj.getTranslateY()
+      (-80 * (destinationFloor - liftCurrentFloor)) + liftObj.getTranslateY()
     );
-    test = `translateY(${-80 * (floorNo - 1)}px)`;
+    test = `translateY(${-80 * (destinationFloor - 1)}px)`;
   }
   else {
-    freelift.style.transform = `translateY(${(80 * (liftCurrentFloor - floorNo)) + liftObj.getTranslateY()}px)`;
+    freelift.style.transform = `translateY(${(80 * (liftCurrentFloor - destinationFloor)) + liftObj.getTranslateY()}px)`;
     liftObj.setTranslateY(
-      (80 * (liftCurrentFloor - floorNo)) + liftObj.getTranslateY()
+      (80 * (liftCurrentFloor - destinationFloor)) + liftObj.getTranslateY()
     );
-    test = `translateY(${80 * (floorNo - liftCurrentFloor)}px)`;
+    test = `translateY(${80 * (destinationFloor - liftCurrentFloor)}px)`;
   }
   console.log(`${test}`);
 
-  freelift.style.transition = `all ${2 * Math.abs(floorNo - liftCurrentFloor)}s`;
+  freelift.style.transition = `all ${2 * Math.abs(destinationFloor - liftCurrentFloor)}s`;
   freelift.style.backgroundColor = `blue`;
 
 
@@ -565,12 +583,12 @@ function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftO
   const updateCurrentFloor = (() => {
     updatedCurrentFloorInt = setInterval(() => {
       if (direction === "up")
-        liftCurrentFloor = Math.min(liftCurrentFloor + 1, floorNo)
+        liftCurrentFloor = Math.min(liftCurrentFloor + 1, destinationFloor)
       else
-        liftCurrentFloor = Math.max(liftCurrentFloor - 1, floorNo)
+        liftCurrentFloor = Math.max(liftCurrentFloor - 1, destinationFloor)
       // freelift.setAttribute("currentFloor", liftCurrentFloor);
       liftObj.setCurrentFloor(liftCurrentFloor);
-      if (liftCurrentFloor == floorNo)
+      if (liftCurrentFloor == destinationFloor)
         clearInterval(updatedCurrentFloorInt)
     }, 2000);
   });
@@ -578,7 +596,7 @@ function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftO
   updateCurrentFloor();
 
   // updateLiftPosition(freelift, currentLiftQueue,
-  // removingLiftPresenceFromFloorInArr, allLifts, floorNo, liftPresenceAr);
+  // removingLiftPresenceFromFloorInArr, allLifts, destinationFloor, liftPresenceAr);
 
   /* 
   logic to timely remove the busy state from the lift 
@@ -586,14 +604,14 @@ function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftO
   */
   setTimeout(() => {
     if (liftObj.getState() == "moving") {
-      liftObj.setCurrentFloor(floorNo);
+      liftObj.setCurrentFloor(destinationFloor);
       liftObj.setState("doorAnimating");
       let doors = doorAnimation(freelift);
 
-      liftPresenceAr[floorNo] = parseInt(liftObj.getId());
+      liftPresenceAr[destinationFloor] = parseInt(liftObj.getId());
       liftCurrentFloor[liftObj.getPreivousFloor()] = -1;
 
-      removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
+      // removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
       document.querySelector(`#counter-${liftObj.getId()}`).innerHTML = liftObj.getCurrentFloor();
 
       // freelift.setAttribute("state", "doorAnimating");
@@ -635,7 +653,7 @@ function updateLiftPos(mainRequestQueue, floorNo, liftPresenceAr, liftObj, liftO
         // liftObj.setBtnDirect("");
 
         if (mainRequestQueue.size() > 0)
-          updateLiftPos(mainRequestQueue, mainRequestQueue.front(), liftPresenceAr, liftObj, liftObjArr);
+          updateLiftPos(mainRequestQueue, liftPresenceAr, liftObj, liftObjArr);
       }, 5000);
 
     }
@@ -679,7 +697,9 @@ function findNearestLift(destinationFloor, liftObjArr, btnDirection) {
   //   }
   // }
 
-  mainRequestQueue.add(destinationFloor);
+  mainRequestQueue.add(destinationFloor, btnDirection);
+  // console.log(`main request queue${mainRequestQueue.printQueue()}`);
+
   if (btnDirection.includes("up"))
     floorArr[destinationFloor].setUpBtnDisable(true);
   else if (btnDirection.includes("down"))
@@ -743,9 +763,5 @@ function intializeState() {
   interval;
   liftQueueMap = new Map();
   liftObjArr = [];
-}
-
-resetBtn.addEventListener("click", () => {
-  intializeState();
   mainFloorBody.innerHTML = "";
-})
+}
