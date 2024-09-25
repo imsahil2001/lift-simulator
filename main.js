@@ -232,7 +232,7 @@ function creatingFloors(floor, lifts) {
     btnDown.setAttribute("id", `down-${floor + 1}`);
 
 
-    if (floor !== parseInt(floorElem.value) - 1)
+    if (parseInt(floorElem.value) === 1 || floor !== parseInt(floorElem.value) - 1)
       buttonContainer.appendChild(btnUp);
 
     if (floor !== 0)
