@@ -777,6 +777,8 @@ function intializeState() {
    liftQueueMap = new Map();
    liftObjArr = [];
    mainFloorBody.innerHTML = "";
+   liftsA = []
+   queue = new Queue();
 }
 
 
