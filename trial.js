@@ -957,13 +957,32 @@ const adjustFloorWidth = () => {
    let actualButton = buttonContainerBodyAll[buttonContainerBodyAll.length - 1];
    console.log(actualButton);
 
-   console.log("mainFloorBody " + mainFloorBody.clientWidth);
-   console.log("liftContainer " + liftContainer.clientWidth);
-   console.log("floorBodyAll " + actualfloor.clientWidth);
-   console.log("buttonContainerBodyAll " + actualButton.clientWidth);
+   console.log("mainFloorBody " + mainFloorBody.width);
+   // console.log("liftContainer " + liftContainer.clientWidth);
+   // console.log("floorBodyAll " + actualfloor.clientWidth);
+   // console.log("buttonContainerBodyAll " + actualButton.clientWidth);
+   // console.log("buttonContainerBodyAll " + actualButton);
 
-   console.log("sum of all length" + Number(actualButton.clientWidth + actualfloor.clientWidth + liftContainer.clientWidth));
-   mainFloorBody.style.width = `${Number(actualButton.clientWidth + actualfloor.clientWidth + liftContainer.clientWidth)}px`;
-   simualtionBox.style.width = `${Number(actualButton.clientWidth + actualfloor.clientWidth + liftContainer.clientWidth)}px`;
+
+   let actualButtonWidth = getMarginRight(actualButton);
+   console.log("buttonContainerBodyAll margin " + actualButtonWidth);
+
+   let combinedWidth = Number(actualButtonWidth + actualfloor.clientWidth + liftContainer.clientWidth);
+   if (combinedWidth > mainFloorBody.clientWidth) {
+      mainFloorBody.style.width = `${Number(actualButtonWidth + actualfloor.clientWidth + liftContainer.clientWidth)}px`;
+      simualtionBox.style.width = `${Number(actualButtonWidth + actualfloor.clientWidth + liftContainer.clientWidth)}px`;
+   } else {
+      mainFloorBody.style.width = `100dvw`;
+      mainFloorBody.style.overflowX = `hidden`;
+      simualtionBox.style.width = `100dvw`;
+   }
+
+   console.log("sum of all length" + Number(actualButtonWidth + actualfloor.clientWidth + liftContainer.clientWidth));
 }
 
+
+function getMarginRight(elem) {
+   const computedLength = window.getComputedStyle(elem);
+   const marginRight = parseFloat(computedLength.marginRight);
+   return elem.clientWidth + marginRight;
+}

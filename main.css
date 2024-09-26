@@ -15,7 +15,7 @@ body{
 }
 
 .mainFloorBody{
-   width:100%;
+   width:100dvw;
 }
 
 .simulation-box{
@@ -28,7 +28,8 @@ body{
    z-index: 11;
    background-image: linear-gradient(to bottom, rgb(56, 56, 56), rgba(240, 6, 6, 0)); /* Gradient from solid color to transparent */
    backdrop-filter: blur(2px); /* Applies blur to the background */
-
+   text-align: center;
+   width: 100dvw;
 }
 
 #liftForm{
@@ -119,16 +120,6 @@ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgb
   font-variation-settings:
     "wdth" 100;
     font-size: 1.1em;
-}
-
-.buttonContainer{
-   display: inline-block;
-   width: 100px;
-   height: 100%;
-}
-
-.simulation-box{
-   text-align: center;
 }
 
 
@@ -239,9 +230,11 @@ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgb
 
 
 .buttonContainer{
-
    display: flex;
     flex-direction: column;
+    width: 100px;
+    margin-right: 20px;
+    height: 100%;
     justify-content: space-around;
 }
 
