@@ -155,6 +155,10 @@ let floorArr = [];
 let liftsA = [];
 let queue = new Queue();
 
+mainFloorBody.addEventListener("scroll", (e) => {
+   console.log(mainFloorBody.clientWidth);
+})
+
 
 /** Preventing user to enter any character value */
 Array.from(inputs).forEach(input => {
@@ -214,6 +218,8 @@ function creatingFloors(floor, lifts) {
 
       floorContainer = document.createElement("div");
       floorContainer.className = "floor";
+      if ((floor + 1) % 2 !== 0)
+         floorContainer.classList.add("odd-floor");
 
       // floor formualation
       let actualfloor = document.createElement("div");
@@ -301,6 +307,7 @@ function creatingFloors(floor, lifts) {
    }
 
    floorContainer.appendChild(liftContainer);
+   adjustFloorWidth();
    removingLiftPresenceFromFloorInArr(liftPresenceAr, liftObjArr);
 }
 
@@ -880,15 +887,15 @@ const moveLift2 = (liftIndex, btn, destinationFloor, queue) => {
 
    let test = "";
    if (direction === "up") {
-      freelift.style.transform = `translateY(${(-80 * (destinationFloor - liftCurrentFloor)) + liftsA[liftIndex].translateY}px)`;
-      liftsA[liftIndex].translateY = (-80 * (destinationFloor - liftCurrentFloor)) + liftsA[liftIndex].translateY;
-      test = `translateY(${-80 * (destinationFloor - 1)}px)`;
+      freelift.style.transform = `translateY(${(-100 * (destinationFloor - liftCurrentFloor)) + liftsA[liftIndex].translateY}px)`;
+      liftsA[liftIndex].translateY = (-100 * (destinationFloor - liftCurrentFloor)) + liftsA[liftIndex].translateY;
+      // test = `translateY(${-100 * (destinationFloor - 1)}px)`;
    }
    else {
-      freelift.style.transform = `translateY(${(80 * (liftCurrentFloor - destinationFloor)) + liftsA[liftIndex].translateY}px)`;
-      liftsA[liftIndex].translateY = (80 * (liftCurrentFloor - destinationFloor)) + liftsA[liftIndex].translateY;
+      freelift.style.transform = `translateY(${(100 * (liftCurrentFloor - destinationFloor)) + liftsA[liftIndex].translateY}px)`;
+      liftsA[liftIndex].translateY = (100 * (liftCurrentFloor - destinationFloor)) + liftsA[liftIndex].translateY;
 
-      test = `translateY(${80 * (destinationFloor - liftCurrentFloor)}px)`;
+      // test = `translateY(${100 * (destinationFloor - liftCurrentFloor)}px)`;
    }
    // console.log(`${test}`);
 
@@ -934,3 +941,29 @@ document.addEventListener("requestInvoked", () => {
 document.addEventListener("dispatchLiftEvent", () => {
    callLift();
 })
+
+const adjustFloorWidth = () => {
+   let mainFloorBody = document.querySelector(".mainFloorBody");
+   let liftContainer = document.querySelector(".liftContainer");
+   let floorBodyAll = document.querySelectorAll(".actualfloor");
+   let buttonContainerBodyAll = document.querySelectorAll(".buttonContainer");
+   let simualtionBox = document.querySelector(".simulation-box");
+
+   console.log(simualtionBox);
+   console.log(mainFloorBody);
+   console.log(liftContainer);
+   let actualfloor = floorBodyAll[floorBodyAll.length - 1]
+   console.log(actualfloor);
+   let actualButton = buttonContainerBodyAll[buttonContainerBodyAll.length - 1];
+   console.log(actualButton);
+
+   console.log("mainFloorBody " + mainFloorBody.clientWidth);
+   console.log("liftContainer " + liftContainer.clientWidth);
+   console.log("floorBodyAll " + actualfloor.clientWidth);
+   console.log("buttonContainerBodyAll " + actualButton.clientWidth);
+
+   console.log("sum of all length" + Number(actualButton.clientWidth + actualfloor.clientWidth + liftContainer.clientWidth));
+   mainFloorBody.style.width = `${Number(actualButton.clientWidth + actualfloor.clientWidth + liftContainer.clientWidth)}px`;
+   simualtionBox.style.width = `${Number(actualButton.clientWidth + actualfloor.clientWidth + liftContainer.clientWidth)}px`;
+}
+

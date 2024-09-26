@@ -14,6 +14,10 @@ body{
    /* background-color: rgb(120, 120, 120); */
 }
 
+.mainFloorBody{
+   width:100%;
+}
+
 .simulation-box{
    /* border-bottom: 3px solid black; */
    padding-bottom: 25px;
@@ -48,18 +52,23 @@ body{
 
 
 .floor{
-   border-bottom: 1px solid gray;
-   height: 80px;
+   border-bottom: 1px solid #dcdcdc;
+   height: 100px;
    display: grid;
    position: relative;
    grid-template-columns: auto auto auto;
    justify-content: start;
    z-index: 10;
+   padding-top: 10px;
+   padding-bottom: 10px;
    /* display: flex; */
    /* align-items: center; */
    /* overflow-x: auto; */
 }
 
+.odd-floor{
+   background-color: rgb(238, 238, 238);
+}
 
 
 /* .groundFloor{
@@ -209,16 +218,18 @@ background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(74,74,86,1) 39%, rgb
 
 .floor-btn{
    display: inline-block;
-   cursor: pointer;
-   font-family: "Honk", system-ui;
-   font-optical-sizing: auto;
-   font-weight: 400;
-   font-style: normal;
-   font-variation-settings: "MORF" 15, "SHLN" 50;
-   font-size: 20px;
-   border: 1px solid gray;
-   border-radius: 10px;
-   padding: 3px 0px 3px 0px;
+    cursor: pointer;
+    font-family: "Honk", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "MORF" 15, "SHLN" 50;
+    font-size: 20px;
+    border: 1px solid #cfcfcf;
+    outline: 0;
+    border-radius: 10px;
+    padding: 3px 0px 3px 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px
 }
 
 .floor-btn:active{
